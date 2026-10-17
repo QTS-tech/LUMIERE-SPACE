@@ -3,8 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Lumière Space v1.15.1</title>
+    <title>流光空間 Lumière Space｜互動式線上 3D 展覽空間</title>
+    <meta name="description" content="流光空間是由七美科技工作室打造的互動式線上 3D 展覽空間，探索沉浸式藝廊、欣賞作品，並建立專屬的數位展場。">
+    <link rel="canonical" href="https://lumierespace.qts.dpdns.org/">
     <link rel="icon" href="https://lumierespace.qts.dpdns.org/Texture/favicon.ico" type="image/x-icon">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="流光空間 Lumière Space">
+    <meta property="og:title" content="流光空間 Lumière Space｜互動式線上 3D 展覽空間">
+    <meta property="og:description" content="探索沉浸式線上藝廊，欣賞作品，並建立專屬的數位展場。">
+    <meta property="og:url" content="https://lumierespace.qts.dpdns.org/">
+    <meta property="og:image" content="https://lumierespace.qts.dpdns.org/Texture/LumiereSpace.png">
+    <meta property="og:image:alt" content="流光空間 Lumière Space">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="流光空間 Lumière Space｜互動式線上 3D 展覽空間">
+    <meta name="twitter:description" content="探索沉浸式線上藝廊，欣賞作品，並建立專屬的數位展場。">
+    <meta name="twitter:image" content="https://lumierespace.qts.dpdns.org/Texture/LumiereSpace.png">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "流光空間 Lumière Space",
+        "url": "https://lumierespace.qts.dpdns.org/",
+        "description": "由七美科技工作室打造的互動式線上 3D 展覽空間。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Qimei Technology Studio",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://lumierespace.qts.dpdns.org/Texture/favicon.ico"
+            }
+        }
+    }
+    </script>
     <style>
         :root {
             --accent-color: rgba(255, 255, 255, 0.9);
@@ -597,6 +627,7 @@
         let commandSuggestionCandidates = [], commandSuggestionIndex = -1, commandSuggestionInput = '', commandSuggestionPrefix = '';
         let commandHistory = [], commandHistoryIndex = -1;
         let canJump = true, velocityY = 0, moveVelocity = new THREE.Vector2(0, 0), isLoading = false, isPaused = true, isSettingsOpen = false, isHelpOpen = false, floorTitleRequested = false, isClosingCommandLine = false;
+        let isTitleEasterEggActive = false, titleEasterEggTimer = null;
         let lastTime = performance.now(), frameCount = 0;
 
         let isZooming = false, targetZoomFov = 25, currentVisualFov = 60;
@@ -3414,6 +3445,12 @@
                 addCommandLog(`成功執行指令: ${cmd}`, 'TitleTest');
                 setTimeout(closeCommandLine, 500); 
             } else if (cmd === '/hello') {
+                isTitleEasterEggActive = true;
+                if (titleEasterEggTimer) clearTimeout(titleEasterEggTimer);
+                titleEasterEggTimer = setTimeout(() => {
+                    isTitleEasterEggActive = false;
+                    titleEasterEggTimer = null;
+                }, 5000);
                                 addCommandLog(`
                                 ⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀
                 ⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀
@@ -4480,6 +4517,8 @@
             const isInitialScreen = uiLayer.style.display !== 'none';
             // 當命令列開啟（isCommandLineOpen === true）時，強制隱藏底下的暫停面板以避免視覺干涉與重疊
             const showPauseMenu = !isLocked && !isSettingsOpen && !isHelpOpen && !isInitialScreen && !isLoading && !isDetailOpen && !isCommandLineOpen;
+            const pageTitle = isTitleEasterEggActive ? 'Hello QTS!' : (isLoading ? 'Loading...' : (isCommandLineOpen ? 'Command...' : (isSettingsOpen ? 'Setting...' : (isPaused && !isInitialScreen ? 'Pause' : 'Lumiere Space'))));
+            if (document.title !== pageTitle) document.title = pageTitle;
             
             document.getElementById('start-overlay').style.display = showPauseMenu ? 'flex' : 'none';
             document.getElementById('help-trigger').style.display = (isInitialScreen || showPauseMenu) ? 'flex' : 'none';
