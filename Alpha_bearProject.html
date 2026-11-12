@@ -3,8 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Lumière Space v1.15.1</title>
+    <title>流光空間 Lumière Space｜互動式線上 3D 展覽空間</title>
+    <meta name="description" content="流光空間是由七美科技工作室打造的互動式線上 3D 展覽空間，探索沉浸式藝廊、欣賞作品，並建立專屬的數位展場。">
+    <link rel="canonical" href="https://lumierespace.qts.dpdns.org/">
     <link rel="icon" href="https://lumierespace.qts.dpdns.org/Texture/favicon.ico" type="image/x-icon">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="流光空間 Lumière Space">
+    <meta property="og:title" content="流光空間 Lumière Space｜互動式線上 3D 展覽空間">
+    <meta property="og:description" content="探索沉浸式線上藝廊，欣賞作品，並建立專屬的數位展場。">
+    <meta property="og:url" content="https://lumierespace.qts.dpdns.org/">
+    <meta property="og:image" content="https://lumierespace.qts.dpdns.org/Texture/LumiereSpace.png">
+    <meta property="og:image:alt" content="流光空間 Lumière Space">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="流光空間 Lumière Space｜互動式線上 3D 展覽空間">
+    <meta name="twitter:description" content="探索沉浸式線上藝廊，欣賞作品，並建立專屬的數位展場。">
+    <meta name="twitter:image" content="https://lumierespace.qts.dpdns.org/Texture/LumiereSpace.png">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "流光空間 Lumière Space",
+        "url": "https://lumierespace.qts.dpdns.org/",
+        "description": "由七美科技工作室打造的互動式線上 3D 展覽空間。",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Qimei Technology Studio",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://lumierespace.qts.dpdns.org/Texture/favicon.ico"
+            }
+        }
+    }
+    </script>
     <style>
         :root {
             --accent-color: rgba(255, 255, 255, 0.9);
@@ -215,6 +245,19 @@
         #disclaimer-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(40px); color: white; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 7000; padding: 40px; box-sizing: border-box; animation: overlay-fade-in 0.6s ease-out; }
         .disclaimer-container { max-width: 600px; background: var(--bg-glass); border: 1px solid var(--border-glass); padding: 50px; text-align: center; backdrop-filter: blur(20px); }
 
+        #alpha-warning-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(40px); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9000; padding: 24px; box-sizing: border-box; animation: overlay-fade-in 0.6s ease-out; }
+        .alpha-warning-container { width: min(600px, 100%); max-height: 100%; overflow-y: auto; box-sizing: border-box; background: var(--bg-glass); border: 1px solid var(--border-glass); padding: 40px; text-align: center; backdrop-filter: blur(20px); }
+        #alpha-warning-message { margin-bottom: 32px; text-align: left; font-size: 13px; line-height: 2; letter-spacing: 1px; opacity: 0.9; user-select: text; -webkit-user-select: text; }
+        #alpha-warning-message p { margin: 0 0 16px; }
+        #alpha-warning-message p:last-child { margin-bottom: 0; }
+        #alpha-warning-actions { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+        #alpha-warning-stable { text-decoration: none; }
+        @media (max-width: 600px) {
+            .alpha-warning-container { padding: 28px 22px; }
+            #alpha-warning-actions { flex-direction: column; }
+            #alpha-warning-actions .glass-btn { width: 100%; box-sizing: border-box; }
+        }
+
         /* 即時光影確認彈窗樣式 */
         #realtime-shadows-confirm-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(40px); color: white; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 8000; padding: 40px; box-sizing: border-box; animation: overlay-fade-in 0.4s ease-out; }
         .realtime-shadows-confirm-container { max-width: 560px; background: var(--bg-glass); border: 1px solid var(--border-glass); padding: 50px; text-align: center; backdrop-filter: blur(20px); }
@@ -365,6 +408,19 @@
     </style>
 </head>
 <body>
+    <div id="alpha-warning-overlay" role="dialog" aria-modal="true" aria-labelledby="alpha-warning-title" aria-describedby="alpha-warning-message">
+        <div class="alpha-warning-container">
+            <h2 id="alpha-warning-title" style="font-size: 20px; font-weight: 400; letter-spacing: 3px; margin: 0 0 24px;">This is Alpha Version</h2>
+            <div id="alpha-warning-message">
+                <p>您目前使用的是內測版本，內含尚未正式公開的功能與設計，系統可能存在嚴重的不穩定性。所有內測功能僅供測試參考，不代表未來必定會正式上線；使用本版本所產生的任何結果與風險，開發團隊概不負責。</p>
+                <p>我們強烈的建議你使用正式發布的穩定版，該版本是我們經過無數時間的辛勞與測試所開發的，確保系統有足夠的完善與穩定</p>
+            </div>
+            <div id="alpha-warning-actions">
+                <button class="glass-btn" id="alpha-warning-accept">我堅持要嘗試，並且我會對我自己負責</button>
+                <a class="glass-btn" id="alpha-warning-stable" href="https://lumierespace.qts.dpdns.org/">我想要前往正式穩定版</a>
+            </div>
+        </div>
+    </div>
     <div id="canvas-container"></div>
     <div id="reticle"></div>
     <div id="floor-title-overlay">
@@ -597,6 +653,7 @@
         let commandSuggestionCandidates = [], commandSuggestionIndex = -1, commandSuggestionInput = '', commandSuggestionPrefix = '';
         let commandHistory = [], commandHistoryIndex = -1;
         let canJump = true, velocityY = 0, moveVelocity = new THREE.Vector2(0, 0), isLoading = false, isPaused = true, isSettingsOpen = false, isHelpOpen = false, floorTitleRequested = false, isClosingCommandLine = false;
+        let isTitleEasterEggActive = false, titleEasterEggTimer = null;
         let lastTime = performance.now(), frameCount = 0;
 
         let isZooming = false, targetZoomFov = 25, currentVisualFov = 60;
@@ -965,6 +1022,27 @@
         animate();
 
         function init() {
+            const alphaWarningOverlay = document.getElementById('alpha-warning-overlay');
+            const alphaWarningAccept = document.getElementById('alpha-warning-accept');
+            alphaWarningAccept.addEventListener('click', () => {
+                alphaWarningOverlay.style.display = 'none';
+                alphaWarningOverlay.setAttribute('aria-hidden', 'true');
+            });
+            alphaWarningOverlay.addEventListener('keydown', (event) => {
+                if (event.key !== 'Tab') return;
+                const focusable = Array.from(alphaWarningOverlay.querySelectorAll('button:not([disabled]), a[href]'));
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (event.shiftKey && document.activeElement === first) {
+                    event.preventDefault();
+                    last.focus();
+                } else if (!event.shiftKey && document.activeElement === last) {
+                    event.preventDefault();
+                    first.focus();
+                }
+            });
+            alphaWarningAccept.focus();
+
             initFocusMeter();
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x010101);
@@ -3414,6 +3492,12 @@
                 addCommandLog(`成功執行指令: ${cmd}`, 'TitleTest');
                 setTimeout(closeCommandLine, 500); 
             } else if (cmd === '/hello') {
+                isTitleEasterEggActive = true;
+                if (titleEasterEggTimer) clearTimeout(titleEasterEggTimer);
+                titleEasterEggTimer = setTimeout(() => {
+                    isTitleEasterEggActive = false;
+                    titleEasterEggTimer = null;
+                }, 5000);
                                 addCommandLog(`
                                 ⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀
                 ⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀
@@ -4480,6 +4564,8 @@
             const isInitialScreen = uiLayer.style.display !== 'none';
             // 當命令列開啟（isCommandLineOpen === true）時，強制隱藏底下的暫停面板以避免視覺干涉與重疊
             const showPauseMenu = !isLocked && !isSettingsOpen && !isHelpOpen && !isInitialScreen && !isLoading && !isDetailOpen && !isCommandLineOpen;
+            const pageTitle = isTitleEasterEggActive ? 'Hello QTS!' : (isLoading ? 'Loading...' : (isCommandLineOpen ? 'Command...' : (isSettingsOpen ? 'Setting...' : (isPaused && !isInitialScreen ? 'Pause' : 'Lumiere Space'))));
+            if (document.title !== pageTitle) document.title = pageTitle;
             
             document.getElementById('start-overlay').style.display = showPauseMenu ? 'flex' : 'none';
             document.getElementById('help-trigger').style.display = (isInitialScreen || showPauseMenu) ? 'flex' : 'none';
